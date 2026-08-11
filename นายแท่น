@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบรับสมัครกรีฑากีฬาสี 🐻 Butterbear Sports Day</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        *{box-sizing:border-box;font-family:'Kanit',sans-serif;margin:0;padding:0}
+        body{background:radial-gradient(circle at center,#ff85a2 0%,#ffb3c6 50%,#ffe5ec 100%);min-height:100vh;padding:20px;color:#5c3d2e}
+        .container{max-width:900px;margin:0 auto}
+        .header{text-align:center;background:rgba(255,255,255,.95);padding:20px;border-radius:25px;box-shadow:0 8px 20px rgba(255,133,162,.3);border:4px solid #fff;margin-bottom:20px}
+        .header h1{color:#d63384;font-size:2rem;text-shadow:2px 2px #ffe5ec}
+        .nav-tabs{display:flex;justify-content:center;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+        .tab-btn{background:rgba(255,255,255,.8);border:2px solid #ff85a2;color:#d63384;padding:10px 24px;border-radius:20px;font-size:1.1rem;font-weight:600;cursor:pointer;transition:all .3s ease;box-shadow:0 4px 8px rgba(0,0,0,.05)}
+        .tab-btn.active,.tab-btn:hover{background:#ff4d6d;color:#fff;border-color:#ff4d6d;transform:translateY(-2px);box-shadow:0 6px 12px rgba(255,77,109,.3)}
+        .card{background:rgba(255,255,255,.95);padding:25px;border-radius:20px;box-shadow:0 8px 15px rgba(0,0,0,.05);border:3px solid #ffd1dc;margin-bottom:25px}
+        .tab-content{display:none}
+        .tab-content.active{display:block}
+        .card-title{color:#d63384;margin-bottom:15px;font-size:1.4rem;display:flex;align-items:center;gap:8px}
+        .form-group{margin-bottom:15px}
+        label{display:block;margin-bottom:5px;font-weight:600;color:#6a4028}
+        input,select{width:100%;padding:12px 15px;border:2px solid #ffccd5;border-radius:12px;font-size:1rem;outline:0;transition:.3s;background:#fffafb}
+        input:focus,select:focus{border-color:#ff4d6d;box-shadow:0 0 8px rgba(255,77,109,.3)}
+        .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+        .btn{width:100%;padding:12px;background:linear-gradient(45deg,#ff4d6d,#ff85a2);color:#fff;border:none;border-radius:12px;font-size:1.1rem;font-weight:600;cursor:pointer;box-shadow:0 4px 10px rgba(255,77,109,.3);transition:.2s}
+        .btn:hover{transform:translateY(-2px);box-shadow:0 6px 15px rgba(255,77,109,.4)}
+        .btn-approve{background:#2ec4b6;color:#fff;padding:6px 12px;border-radius:8px;border:none;cursor:pointer;font-weight:bold;margin-right:5px}
+        .btn-reject{background:#e63946;color:#fff;padding:6px 12px;border-radius:8px;border:none;cursor:pointer;font-weight:bold}
+        .table-container{overflow-x:auto}
+        table{width:100%;border-collapse:collapse;margin-top:10px;background:#fff;border-radius:12px;overflow:hidden}
+        th{background:#ffccd5;color:#a4133c;padding:12px;text-align:left}
+        td{padding:12px;border-bottom:1px solid #ffe5ec}
+        tr.group-start{background:#fff0f3;font-weight:bold}
+        .badge{background:#ff4d6d;color:#fff;padding:3px 8px;border-radius:8px;font-size:.85rem}
+        .login-box{background:#ffe5ec;padding:15px;border-radius:12px;margin-bottom:20px}
+        .setup-box{background:#fff3cd;border:2px dashed #ff9f1c;padding:15px;border-radius:12px;margin-bottom:20px}
+        @media (max-width:600px){.grid-2{grid-template-columns:1fr}}
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>🐻 Butterbear Athletics Track & Field 🏃‍♀️</h1>
+        <p>ระบบรับสมัครกรีฑากีฬาสีสไตล์หมีเนยน่ารักสดใส</p>
+    </div>
+    <div class="nav-tabs">
+        <button class="tab-btn active" onclick="switchTab('tab-applicant')">🏃 ผู้สมัคร</button>
+        <button class="tab-btn" onclick="switchTab('tab-reg-admin')">📝 สมัครผู้ดูแล</button>
+        <button class="tab-btn" onclick="switchTab('tab-admin')">🔐 ผู้ดูแล</button>
+    </div>
+
+    <div id="tab-applicant" class="tab-content active">
+        <div class="card">
+            <h2 class="card-title">🎀 แบบฟอร์มลงทะเบียนนักกีฬา</h2>
+            <form id="athleteForm">
+                <div class="grid-2">
+                    <div class="form-group"><label>ชื่อจริง:</label><input type="text" id="firstName" placeholder="เช่น สมชาย" required></div>
+                    <div class="form-group"><label>ชื่อเล่น:</label><input type="text" id="nickname" placeholder="เช่น เนย" required></div>
+                </div>
+                <div class="grid-2">
+                    <div class="form-group"><label>เลขที่:</label><input type="number" id="no" placeholder="เช่น 12" required></div>
+                    <div class="form-group"><label>ชั้น:</label><input type="text" id="classroom" placeholder="เช่น ม.6/7" required></div>
+                </div>
+                <div class="grid-2">
+                    <div class="form-group"><label>ประเภทกรีฑา:</label>
+                        <select id="category" required>
+                            <option value="ประเภทลู่">ประเภทลู่</option>
+                            <option value="ประเภทลาน">ประเภทลาน</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>รายการแข่งขัน:</label><input type="text" id="event" placeholder="เช่น วิ่ง 100 ม." required></div>
+                </div>
+                <button type="submit" class="btn">✨ ยืนยันการสมัครลงแข่ง</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="tab-reg-admin" class="tab-content">
+        <div class="card">
+            <h2 class="card-title">📝 ลงทะเบียนขอสิทธิ์ผู้ดูแลระบบ</h2>
+            <form id="adminRegForm">
+                <div class="form-group"><label>ชื่อเล่นที่ต้องการใช้เป็นผู้ดูแล:</label><input type="text" id="newAdminName" placeholder="กรอกชื่อเล่น" required></div>
+                <div class="form-group"><label>ตั้งรหัสผ่าน:</label><input type="password" id="newAdminPass" placeholder="ตั้งรหัสผ่านที่จำได้ง่ายแต่คาดเดายาก" required></div>
+                <button type="submit" class="btn">📨 ส่งคำขอสมัครผู้ดูแล</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="tab-admin" class="tab-content">
+        <div id="adminLoginSection" class="card">
+            <h2 class="card-title">🔐 เข้าสู่ระบบผู้ดูแล</h2>
+            <div id="firstSetupBox" class="setup-box" style="display:none;">
+                <p style="color:#856404; font-weight:500;">💡 ยังไม่มีผู้ดูแลในระบบ — ผู้ที่ลงทะเบียนคนแรกจะได้รับสิทธิ์ทันทีโดยไม่ต้องรออนุมัติ</p>
+            </div>
+            <div class="login-box">
+                <div class="grid-2">
+                    <div class="form-group"><label>ชื่อเล่นผู้ดูแล:</label><input type="text" id="adminUser" placeholder="กรอกชื่อเล่น"></div>
+                    <div class="form-group"><label>รหัสผ่าน:</label><input type="password" id="adminPass" placeholder="กรอกรหัสผ่าน"></div>
+                </div>
+                <button type="button" onclick="loginAdmin()" class="btn">เข้าสู่ระบบผู้ดูแล</button>
+            </div>
+        </div>
+
+        <div id="adminDashboard" style="display:none;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;flex-wrap:wrap;gap:10px;">
+                <h3 style="color:#d63384;" id="welcomeAdminMsg">ยินดีต้อนรับ ผู้ดูแล</h3>
+                <button onclick="logoutAdmin()" style="background:#6c757d;color:#fff;border:none;padding:6px 12px;border-radius:8px;cursor:pointer;">ออกจากระบบ</button>
+            </div>
+            <div class="card">
+                <h2 class="card-title">⏳ คำขอสมัครผู้ดูแลที่รอการยินยอม</h2>
+                <div class="table-container">
+                    <table><thead><tr><th>ชื่อเล่น</th><th style="width:160px;">การจัดการ</th></tr></thead><tbody id="pendingAdminTableBody"></tbody></table>
+                </div>
+            </div>
+            <div class="card">
+                <h2 class="card-title">🏃‍♂️ รายชื่อผู้สมัคร: ประเภทลู่</h2>
+                <div class="table-container">
+                    <table><thead><tr><th>ชั้น/ห้อง</th><th>เลขที่</th><th>ชื่อจริง</th><th>ชื่อเล่น</th><th>รายการแข่งขัน</th></tr></thead><tbody id="trackTableBody"></tbody></table>
+                </div>
+            </div>
+            <div class="card">
+                <h2 class="card-title">🏋️‍♀️ รายชื่อผู้สมัคร: ประเภทลาน</h2>
+                <div class="table-container">
+                    <table><thead><tr><th>ชั้น/ห้อง</th><th>เลขที่</th><th>ชื่อจริง</th><th>ชื่อเล่น</th><th>รายการแข่งขัน</th></tr></thead><tbody id="fieldTableBody"></tbody></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let athletes=JSON.parse(localStorage.getItem('butterbear_athletes'))||[];
+let pendingAdmins=JSON.parse(localStorage.getItem('butterbear_pending_admins'))||[];
+let approvedAdmins=JSON.parse(localStorage.getItem('butterbear_approved_admins'))||[];
+let currentLoggedInAdmin=null;
+
+if(approvedAdmins.length===0)document.getElementById('firstSetupBox').style.display='block';
+
+function switchTab(tabId){
+    document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el=>el.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    event.currentTarget.classList.add('active');
+}
+
+document.getElementById('athleteForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    athletes.push({
+        firstName:document.getElementById('firstName').value.trim(),
+        nickname:document.getElementById('nickname').value.trim(),
+        no:parseInt(document.getElementById('no').value),
+        classroom:document.getElementById('classroom').value.trim(),
+        category:document.getElementById('category').value,
+        event:document.getElementById('event').value.trim()
+    });
+    localStorage.setItem('butterbear_athletes',JSON.stringify(athletes));
+    e.target.reset();
+    alert("บันทึกการสมัครเรียบร้อยแล้วค่ะ! 🐻✨");
+    if(currentLoggedInAdmin)renderAthleteTables();
+});
+
+document.getElementById('adminRegForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    const name=document.getElementById('newAdminName').value.trim();
+    const pass=document.getElementById('newAdminPass').value.trim();
+    if(!name||!pass){alert("กรุณากรอกข้อมูลให้ครบถ้วนค่ะ");return;}
+    if(approvedAdmins.some(a=>a.nickname===name)||pendingAdmins.some(a=>a.nickname===name)){
+        alert("ชื่อเล่นนี้มีอยู่แล้วค่ะ");return;
+    }
+    if(approvedAdmins.length===0){
+        approvedAdmins.push({nickname:name,pass:pass});
+        localStorage.setItem('butterbear_approved_admins',JSON.stringify(approvedAdmins));
+        alert(`🎉 คุณคือผู้ดูแลคนแรก! เข้าสู่ระบบได้ทันทีด้วยชื่อ "${name}" และรหัสที่ตั้งไว้ค่ะ`);
+        document.getElementById('firstSetupBox').style.display='none';
+    }else{
+        pendingAdmins.push({nickname:name,pass:pass});
+        localStorage.setItem('butterbear_pending_admins',JSON.stringify(pendingAdmins));
+        alert("ส่งคำขอเรียบร้อยแล้ว! กรุณารอผู้ดูแลอนุมัติค่ะ 🐻");
+    }
+    e.target.reset();
+    if(currentLoggedInAdmin)renderPendingAdminTable();
+});
+
+function loginAdmin(){
+    const user=document.getElementById('adminUser').value.trim();
+    const pass=document.getElementById('adminPass').value.trim();
+    const found=approvedAdmins.find(a=>a.nickname===user&&a.pass===pass);
+    if(found){
+        currentLoggedInAdmin=found.nickname;
+        document.getElementById('adminLoginSection').style.display='none';
+        document.getElementById('adminDashboard').style.display='block';
+        document.getElementById('welcomeAdminMsg').innerText=`🐻 ยินดีต้อนรับผู้ดูแล: คุณ${currentLoggedInAdmin}`;
+        renderPendingAdminTable();renderAthleteTables();
+    }else{alert("❌ ชื่อหรือรหัสผ่านไม่ถูกต้องค่ะ");}
+}
+
+function logoutAdmin(){
+    currentLoggedInAdmin=null;
+    document.getElementById('adminUser').value='';document.getElementById('adminPass').value='';
+    document.getElementById('adminLoginSection').style.display='block';
+    document.getElementById('adminDashboard').style.display='none';
+}
+
+function approveAdmin(i){
+    approvedAdmins.push(pendingAdmins.splice(i,1)[0]);
+    localStorage.setItem('butterbear_pending_admins',JSON.stringify(pendingAdmins));
+    localStorage.setItem('butterbear_approved_admins',JSON.stringify(approvedAdmins));
+    renderPendingAdminTable();alert("ยินยอมสิทธิ์เรียบร้อยแล้วค่ะ");
+}
+function rejectAdmin(i){
+    pendingAdmins.splice(i,1);
+    localStorage.setItem('butterbear_pending_admins',JSON.stringify(pendingAdmins));
+    renderPendingAdminTable();alert("ปฏิเสธคำขอแล้วค่ะ");
+}
+
+function renderPendingAdminTable(){
+    const tb=document.getElementById('pendingAdminTableBody');tb.innerHTML='';
+    if(!pendingAdmins.length){tb.innerHTML='<tr><td colspan="2" style="text-align:center;color:#999;">ยังไม่มีคำขอ</td></tr>';return;}
+    pendingAdmins.forEach((it,i)=>tb.innerHTML+=`<tr><td><b>👑 ${it.nickname}</b></td><td><button class="btn-approve" onclick="approveAdmin(${i})">ยินยอม</button><button class="btn-reject" onclick="rejectAdmin(${i})">ปฏิเสธ</button></td></tr>`);
+}
+
+function sortAthletes(list){
+    return list.sort((a,b)=>a.classroom===b.classroom?a.no-b.no:a.classroom.localeCompare(b.classroom,'th'));
+}
+
+function renderAthleteTables(){
+    const tbT=document.getElementById('trackTableBody');
+    const tbF=document.getElementById('fieldTableBody');
+    tbT.innerHTML=tbF.innerHTML='';
+    const listT=sortAthletes(athletes.filter(x=>x.category==='ประเภทลู่'));
+    const listF=sortAthletes(athletes.filter(x=>x.category==='ประเภทลาน'));
+    const fill=(data,tb)=>{
+        if(!data.length){tb.innerHTML='<tr><td colspan="5" style="text-align:center;color:#999;">ยังไม่มีรายชื่อ</td></tr>';return;}
+        let prev='';
+        data.forEach(it=>{
+            const row=document.createElement('tr');
+            if(it.classroom!==prev){row.classList.add('group-start');prev=it.classroom;}
+            row.innerHTML=`<td><span class="badge">${it.classroom}</span></td><td>${it.no}</td><td>${it.firstName}</td><td>${it.nickname}</td><td><b>${it.event}</b></td>`;
+            tb.appendChild(row);
+        });
+    };
+    fill(listT,tbT);fill(listF,tbF);
+}
+</script>
+</body>
+</html>
